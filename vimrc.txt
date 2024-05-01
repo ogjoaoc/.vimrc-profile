@@ -1,0 +1,66 @@
+" Plugins
+call plug#begin('~/.vim/plugged')
+
+" Code completion
+Plug 'ycm-core/YouCompleteMe'
+
+" Syntax checker
+Plug 'vim-syntastic/syntastic'
+
+call plug#end()
+
+" YouCompleteMe settings
+let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_semantic_triggers = {
+      \ 'c,cpp,python,java,php,go,scala,javascript': ['re!\w{2}'],
+      \ 'cs,lua,javascript.jsx': ['re!\w{2}'],
+      \ }
+
+" Syntastic settings
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:ycm_confirm_extra_conf = 0 
+
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000
+set undoreload=10000
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set bs=2
+set ignorecase
+set smartcase
+set gdefault
+set autoindent
+set autowrite
+set hlsearch
+set incsearch
+set showmatch
+set vb t_vb=
+set ruler
+syntax on
+setlocal spell spelllang=en
+set nospell
+set encoding=utf-8
+set number
+
+" Tab autocompletes
+function! Mosh_Tab_Or_Complete()
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+        return "\<C-N>"
+    else
+        return "\<Tab>"
+endfunction
+
+:inoremap <Tab> <C-R>=Mosh_Tab_Or_Complete()<CR>
+
+autocmd BufRead,BufNewFile *.php setfiletype=php
+
+" Common typos
+:iab functino function
+:iab fales false
+
